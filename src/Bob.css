@@ -1,5 +1,24 @@
 .bob {
     width: 100px;
     height: 100px;
+    margin: 10px;
     background-color: #caabd8; /* 9873b9 714288 */
+    border-bottom: 4px solid;
+    border-color: transparent;
+}
+
+.bob:hover {
+    cursor: pointer;
+}
+
+.bob.selected {
+    border-color: #3c254c;
+}
+
+.bob.first {
+    background-color: #714288;
+}
+
+.bob.playing {
+    background-color: #9873b9;
 }
