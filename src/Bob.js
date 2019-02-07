@@ -10,9 +10,14 @@ class Bob extends Component {
             selected: !prevState.selected
         }));
     }
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextProps.playing && this.state.selected) {
+            nextProps.playSound(this.props.rowIndex);
+        }
+    }
 
     render() {
-        const {playing, tick, currentTick, first} = this.props;
+        const {playing, tick, first} = this.props;
 
         return <div
         onClick={this.selectToggle.bind(this)}
@@ -21,7 +26,7 @@ class Bob extends Component {
         (playing ? ' playing' : ' ') +
         (this.state.selected ? ' selected' : '')
         }>
-            {tick} {currentTick}
+            {tick}
         </div>
     }
 }

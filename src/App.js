@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Bob from './Bob.js'
+import {Howl, Howler} from 'howler';
+
 import './App.css';
 
 class App extends Component {
@@ -8,11 +10,17 @@ class App extends Component {
         bpm: 120,
         barLength: 4,
         barsPerRow: 2,
-        rowsPerScreen: 1
+        rowsPerScreen: 3,
+        soundsSrc: [
+            './sounds/bd04.wav',
+            './sounds/hh04.wav',
+            './sounds/sd04.wav'
+        ]
     };
 
     state = {
         currentTick: 1,
+        rows: [],
         tickDuration: null,
         totalTickLength: null
     };
@@ -22,8 +30,10 @@ class App extends Component {
         this._ticker = this.ticker.bind(this);
     }
 
-    playSound(sound){
-        console.log('boom');
+    playSound(rowIndex) {
+        let rows = this.state.rows;
+        console.log(rows[rowIndex].sound);
+        rows[rowIndex].sound.play();
     }
 
     ticker() {
@@ -31,6 +41,7 @@ class App extends Component {
             currentTick: (prevState.currentTick + 1) > prevState.totalTickLength ? 0 : (prevState.currentTick + 1)
         }));
     }
+
     play() {
         this.refTickerInterval = setInterval(this._ticker, this.state.tickDuration)
     }
@@ -39,36 +50,53 @@ class App extends Component {
         clearInterval(this.refTickerInterval);
     }
 
-    rowBuilder() {
+    screenBuilder() {
+        let screen = [];
+        for (let i = 1; i <= this.options.rowsPerScreen; i++) {
+            screen.push(
+                <div className={"row"} key={i}>
+                    {this.rowBuilder(i)}
+                </div>
+            )
+        }
+        return screen;
+    }
+
+    rowBuilder(rowIndex) {
         const {totalTickLength, currentTick} = this.state;
         const row = [];
-        for (let i=1; i <= totalTickLength; i++) {
+
+        for (let i = 1; i <= totalTickLength; i++) {
             row.push(
                 <Bob playing={i === currentTick}
-                     first={(i-1) % this.options.barLength === 0}
+                     first={(i - 1) % this.options.barLength === 0}
                      tick={i}
                      key={i}
                      currentTick={currentTick}
-                     exec={this.playSound.bind(this)}
-                ></Bob>
+                     playSound={this.playSound.bind(this)}
+                     rowIndex={rowIndex}
+                > </Bob>
             )
         }
 
         return row;
     }
 
-    barBuilder(bar) {
-       // return bar.map((bob, index,) => { <Bob selected={true}
-       //       playing={false}
-       //       tick={this.state.currentTick}
-       //       position={this.state.currentTick}
-       //  ></Bob> })
-    }
-
     initialise() {
+        //metrics
         this.setState({
-            tickDuration : (this.options.bpm / (60 * this.options.barLength)) * 1000,
-            totalTickLength :  this.options.barLength * this.options.barsPerRow
+            tickDuration: (this.options.bpm / (60 * this.options.barLength)) * 1000,
+            totalTickLength: this.options.barLength * this.options.barsPerRow
+        });
+        let rows = [];
+        for (let i = 0; i <= this.options.rowsPerScreen; i++) {
+            let sound = new Howl({
+                src: [this.options.soundsSrc[i]]
+            });
+            rows.push({sound})
+        }
+        this.setState({
+            rows:rows
         })
     }
 
@@ -81,8 +109,8 @@ class App extends Component {
             <div className="App">
                 <button onClick={this.play.bind(this)}>play</button>
                 <button onClick={this.stop.bind(this)}>stop</button>
-                <div className={"row"}>
-                    {this.rowBuilder()}
+                <div className={"rows"}>
+                    {this.screenBuilder()}
                 </div>
             </div>
         );
