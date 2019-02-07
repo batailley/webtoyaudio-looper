@@ -9,12 +9,16 @@ class App extends Component {
     options = {
         bpm: 120,
         barLength: 4,
-        barsPerRow: 2,
-        rowsPerScreen: 3,
+        barsPerRow: 4,
+        rowsPerScreen: 6,
         soundsSrc: [
             './sounds/bd04.wav',
             './sounds/hh04.wav',
-            './sounds/sd04.wav'
+            './sounds/sd04.wav',
+            './sounds/cp02.wav',
+            './sounds/hh01.wav',
+            './sounds/hh02.wav',
+            './sounds/oh02.wav',
         ]
     };
 
@@ -32,13 +36,12 @@ class App extends Component {
 
     playSound(rowIndex) {
         let rows = this.state.rows;
-        console.log(rows[rowIndex].sound);
         rows[rowIndex].sound.play();
     }
 
     ticker() {
         this.setState(prevState => ({
-            currentTick: (prevState.currentTick + 1) > prevState.totalTickLength ? 0 : (prevState.currentTick + 1)
+            currentTick: (prevState.currentTick + 1) > prevState.totalTickLength ? 1 : (prevState.currentTick + 1)
         }));
     }
 
@@ -55,7 +58,13 @@ class App extends Component {
         for (let i = 1; i <= this.options.rowsPerScreen; i++) {
             screen.push(
                 <div className={"row"} key={i}>
-                    {this.rowBuilder(i)}
+                    <div className={"row-header"}>
+                        <span>{i} - </span>
+                        <span>{this.options.soundsSrc[i-1]}</span>
+                    </div>
+                    <div className={"row-content"}>
+                        {this.rowBuilder(i-1)}
+                    </div>
                 </div>
             )
         }
@@ -84,17 +93,19 @@ class App extends Component {
 
     initialise() {
         //metrics
+
         this.setState({
-            tickDuration: (this.options.bpm / (60 * this.options.barLength)) * 1000,
+            tickDuration: (60)/(this.options.bpm * this.options.barLength) * 1000,
             totalTickLength: this.options.barLength * this.options.barsPerRow
         });
         let rows = [];
-        for (let i = 0; i <= this.options.rowsPerScreen; i++) {
+        for (let i = 1; i <= this.options.rowsPerScreen; i++) {
             let sound = new Howl({
-                src: [this.options.soundsSrc[i]]
+                src: [this.options.soundsSrc[i-1]]
             });
             rows.push({sound})
         }
+        console.log(rows);
         this.setState({
             rows:rows
         })
