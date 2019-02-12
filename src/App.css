@@ -2,3 +2,73 @@
     display: flex;
     flex-wrap: wrap;
 }
+.row-header {
+    margin: 10px 4px 4px 6px;
+    font-size: 14px;
+    color: #555;
+}
+.row-number {
+    display:inline-flex;
+    align-content: center;
+    justify-content: center;
+    background-color: #555;
+    color:#FFF;
+    font-size: 18px;
+    font-weight: bold;
+    padding:4px 12px;
+    margin-right: 4px;
+
+}
+.track-header {
+    display:flex;
+    justify-items: center;
+}
+.btn {
+    outline:none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    display:inline-flex;
+    align-content: center;
+    justify-content: center;
+    width: 100px;
+    height: 70px;
+    margin: 5px;
+    background-color: #EFEFEF;
+    border: 1px solid #E0E0E0;
+    font-size: 32px;
+    text-transform: uppercase;
+    color: #D0D0D0;
+    transition: all 250ms;
+}
+
+.btn-play.play {
+    background-color: #7bd27b;
+    border: 1px solid #448544;
+    color: #2f642f;
+}
+
+.btn-stop.play {
+    background-color: #E0E0E0;
+    border: 1px solid #999999;
+    color: #999999;
+}
+.track-info {
+    display:inline-flex;
+    align-content: center;
+    flex-direction: column;
+    padding:4px;
+    width: 100px;
+    height: 60px;
+    margin: 5px;
+    background-color: #EFEFEF;
+    border: 1px solid #E0E0E0;
+    font-size: 32px;
+    color: #aaa;
+    text-align: left;
+}
+.track-info .bpm, .track-info .pattern, .track-info .tracks, .track-info .tick{
+    display:block;
+    font-size:12px;
+    text-transform: uppercase;
+    font-weight:bold;
+}

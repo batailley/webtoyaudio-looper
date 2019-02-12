@@ -26,7 +26,6 @@ class Bob extends Component {
         (playing ? ' playing' : ' ') +
         (this.state.selected ? ' selected' : '')
         }>
-            {tick}
         </div>
     }
 }

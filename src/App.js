@@ -26,7 +26,9 @@ class App extends Component {
         currentTick: 1,
         rows: [],
         tickDuration: null,
-        totalTickLength: null
+        totalTickLength: null,
+        playing: false,
+        pattern: 1
     };
 
     constructor() {
@@ -46,11 +48,21 @@ class App extends Component {
     }
 
     play() {
-        this.refTickerInterval = setInterval(this._ticker, this.state.tickDuration)
+        if (this.state.playing) {
+            this.stop();
+        } else {
+            this.setState(prevState => ({
+                playing: true
+            }));
+            this.refTickerInterval = setInterval(this._ticker, this.state.tickDuration);
+        }
     }
 
     stop() {
         clearInterval(this.refTickerInterval);
+        this.setState(prevState => ({
+            playing: false
+        }));
     }
 
     screenBuilder() {
@@ -59,11 +71,11 @@ class App extends Component {
             screen.push(
                 <div className={"row"} key={i}>
                     <div className={"row-header"}>
-                        <span>{i} - </span>
-                        <span>{this.options.soundsSrc[i-1]}</span>
+                        <span className="row-number">{i}</span>
+                        <span>{this.options.soundsSrc[i - 1]}</span>
                     </div>
                     <div className={"row-content"}>
-                        {this.rowBuilder(i-1)}
+                        {this.rowBuilder(i - 1)}
                     </div>
                 </div>
             )
@@ -95,19 +107,19 @@ class App extends Component {
         //metrics
 
         this.setState({
-            tickDuration: (60)/(this.options.bpm * this.options.barLength) * 1000,
+            tickDuration: (60) / (this.options.bpm * this.options.barLength) * 1000,
             totalTickLength: this.options.barLength * this.options.barsPerRow
         });
         let rows = [];
         for (let i = 1; i <= this.options.rowsPerScreen; i++) {
             let sound = new Howl({
-                src: [this.options.soundsSrc[i-1]]
+                src: [this.options.soundsSrc[i - 1]]
             });
             rows.push({sound})
         }
         console.log(rows);
         this.setState({
-            rows:rows
+            rows: rows
         })
     }
 
@@ -116,10 +128,17 @@ class App extends Component {
     }
 
     render() {
+        let play = this.state.playing ? "play" : "";
         return (
             <div className="App">
-                <button onClick={this.play.bind(this)}>play</button>
-                <button onClick={this.stop.bind(this)}>stop</button>
+                <div className="track-header">
+                    <button className={"btn btn-play " + play} onClick={this.play.bind(this)}>play</button>
+                    <button className={"btn btn-stop " + play} onClick={this.stop.bind(this)}>stop</button>
+                    <div className={"track-info"}><span className={"bpm"}>bpm: </span>{this.options.bpm}</div>
+                    <div className={"track-info"}><span className={"pattern"}>Pattern: </span>{this.state.pattern}</div>
+                    <div className={"track-info"}><span className={"tracks"}>Tracks: </span>{this.state.rows.length}</div>
+                    <div className={"track-info"}><span className={"tick"}>Tick: </span>{this.state.currentTick}</div>
+                </div>
                 <div className={"rows"}>
                     {this.screenBuilder()}
                 </div>
