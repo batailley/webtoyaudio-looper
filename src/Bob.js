@@ -17,7 +17,7 @@ class Bob extends Component {
     }
 
     render() {
-        const {playing, tick, first} = this.props;
+        const {playing, first} = this.props;
 
         return <div
         onClick={this.selectToggle.bind(this)}

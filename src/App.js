@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Bob from './Bob.js'
-import {Howl, Howler} from 'howler';
+import { Howl } from 'howler';
 
 import './App.css';
 
@@ -84,18 +84,18 @@ class App extends Component {
     }
 
     rowBuilder(rowIndex) {
-        const {totalTickLength, currentTick} = this.state;
+        const { totalTickLength, currentTick } = this.state;
         const row = [];
 
         for (let i = 1; i <= totalTickLength; i++) {
             row.push(
                 <Bob playing={i === currentTick}
-                     first={(i - 1) % this.options.barLength === 0}
-                     tick={i}
-                     key={i}
-                     currentTick={currentTick}
-                     playSound={this.playSound.bind(this)}
-                     rowIndex={rowIndex}
+                    first={(i - 1) % this.options.barLength === 0}
+                    tick={i}
+                    key={i}
+                    currentTick={currentTick}
+                    playSound={this.playSound.bind(this)}
+                    rowIndex={rowIndex}
                 > </Bob>
             )
         }
@@ -115,7 +115,7 @@ class App extends Component {
             let sound = new Howl({
                 src: [this.options.soundsSrc[i - 1]]
             });
-            rows.push({sound})
+            rows.push({ sound })
         }
         console.log(rows);
         this.setState({
