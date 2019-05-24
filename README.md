@@ -1,3 +1,8 @@
+## Web Toy Audio Looper
+WTAL is little loop maker, originally done for my daughter as a cheap sound launcher it turned out to a playground for my javscript adventures.
+
+
+-------------------------------------------------------------
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
