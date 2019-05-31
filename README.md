@@ -1,5 +1,5 @@
 ## Web Toy Audio Looper
-WTAL is little loop maker, originally done for my daughter as a cheap sound launcher it turned out to a playground for my javscript adventures.
+WTAL is little loop maker, originally built for my daughter as a cheap sound launcher it turned out to a playground for my javascript adventures.
 
 
 -------------------------------------------------------------
