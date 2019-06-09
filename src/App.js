@@ -104,8 +104,7 @@ class App extends Component {
     }
 
     initialise() {
-        //metrics
-
+        //  metrics
         this.setState({
             tickDuration: (60) / (this.options.bpm * this.options.barLength) * 1000,
             totalTickLength: this.options.barLength * this.options.barsPerRow
