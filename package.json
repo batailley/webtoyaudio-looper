@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "howler": "^2.1.1",
-    "react-scripts": "3.0.1",
     "@k-ramel/react": "^2.1.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "howler": "^2.1.1",
     "k-ramel": "^2.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-scripts": "3.0.1",
     "recompose": "^0.30.0"
   },
   "scripts": {
@@ -25,5 +26,11 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.13.0"
+  }
 }
